@@ -1,7 +1,7 @@
 import { getStartingBoard, computeNextFishState } from "../engine";
-import { isFish, Fish } from "../fish";
+import { isFish } from "../fish";
 import { isShark } from "../shark";
-import { printBoard, iterateBoardCells } from "../board";
+import { iterateBoardCells } from "../board";
 
 describe("engine", () => {
   test("getStartingBoard", () => {
