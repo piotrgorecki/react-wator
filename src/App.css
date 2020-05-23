@@ -1,0 +1,45 @@
+.App {
+  display: flex;
+}
+
+.board {
+  display: flex;
+}
+
+.row {
+  flex-flow: row;
+}
+
+.emptyCell {
+  background-color: deepskyblue;
+}
+
+.fishCell {
+  background-color: aquamarine;
+}
+
+.sharkCell {
+  background-color: cadetblue;
+}
+
+.emptyCell,
+.fishCell,
+.sharkCell {
+  width: 8px;
+  height: 8px;
+  /* border-width: 1px; */
+  /* border-style: dotted; */
+  /* border-color: dodgerblue; */
+}
+
+.sideMenu {
+  display: flex;
+  flex-flow: column;
+  width: 200px;
+  padding: 20px;
+}
+
+.resetButton {
+  margin-bottom: 20px;
+  padding: 10px;
+}
