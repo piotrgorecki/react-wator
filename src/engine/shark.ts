@@ -18,12 +18,12 @@ export const decEnergy = (shark: Shark) => {
 export const isSharkBreedTime = (shark: Shark, energyLevel: number = 120) =>
   shark.energy >= energyLevel;
 
-export const eatFish = (shark: Shark) => {
-  shark.energy += 30;
+export const eatFish = (shark: Shark, energyBonus: number = 30) => {
+  shark.energy += energyBonus;
 };
 
-export const breadShark = (shark: Shark) => {
-  shark.energy = Math.round(shark.energy / 2);
+export const breadShark = (shark: Shark, startingEnergy: number = 60) => {
+  shark.energy = startingEnergy;
 };
 
 export const isDead = (shark: Shark) => shark.energy <= 0;

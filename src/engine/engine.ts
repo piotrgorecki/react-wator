@@ -115,7 +115,7 @@ export const computeNextFishState = (
 
   incAge(fish);
 
-  if (isBreedTime(fish, 50)) {
+  if (isBreedTime(fish, 90)) {
     resetBreedTime(fish);
     nextBoard = breed(moveTo, nextBoard, getNewFish());
   }
@@ -143,7 +143,7 @@ const computeNextSharkState = (
   const cellToMove = getCell(moveTo, nextBoard);
 
   if (isFish(cellToMove)) {
-    eatFish(shark);
+    eatFish(shark, 30);
   } else {
     decEnergy(shark);
     if (isDead(shark)) {
@@ -155,7 +155,7 @@ const computeNextSharkState = (
   nextBoard = moveCell(position, moveTo, nextBoard);
 
   if (isSharkBreedTime(shark)) {
-    breadShark(shark);
+    breadShark(shark, 60);
     return breed(moveTo, nextBoard, getNewShark());
   }
 

@@ -1,6 +1,6 @@
 import { Fish } from "./fish";
 import { Shark } from "./shark";
-import { EmptyCell, Empty, isEmpty } from "./empty";
+import { EmptyCell, Empty } from "./empty";
 import { getRandomListItem } from "./helpers";
 
 export type Cell = Empty | Fish | Shark;
