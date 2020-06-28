@@ -12,14 +12,14 @@ const CellSelector = [EmptyCell, FishCell, SharkCell];
 const INTERVAL = 100; //ms
 
 const getNewEngine = () =>
-  new Engine([100, 100], 84, 71, {
+  new Engine([100, 100], 3, 61, {
     fish: {
-      breedTime: 24,
+      breedTime: 8,
     },
     shark: {
-      startingEnergy: 34,
-      breedEnergy: 88,
-      energyBonus: 67,
+      startingEnergy: 68,
+      breedEnergy: 84,
+      energyBonus: 59,
     },
   });
 
