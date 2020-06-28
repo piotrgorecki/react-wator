@@ -1,63 +1,60 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 
-import "./App.css";
-import { getStartingBoard, getNextBoard } from "./engine/engine";
-import { Cell, Board } from "./engine/board";
+import Engine, { getSimpleBoard } from "wator-engine";
 
+import "./App.css";
+
+const EmptyCell = <div className="emptyCell" />;
 const FishCell = <div className="fishCell" />;
 const SharkCell = <div className="sharkCell" />;
-const EmptyCell = <div className="emptyCell" />;
-const CellSelector = {
-  fish: FishCell,
-  shark: SharkCell,
-  empty: EmptyCell,
-};
+const CellSelector = [EmptyCell, FishCell, SharkCell];
 
-const BOARD_EDGE_SIZE = 80;
-const NUMBER_OF_FISH = BOARD_EDGE_SIZE * 3;
-const NUMBER_OF_SHARKS = BOARD_EDGE_SIZE / 2;
-const INTERVAL = 200; //ms
+const INTERVAL = 100; //ms
+
+const getNewEngine = () =>
+  new Engine([100, 100], 84, 71, {
+    fish: {
+      breedTime: 24,
+    },
+    shark: {
+      startingEnergy: 34,
+      breedEnergy: 88,
+      energyBonus: 67,
+    },
+  });
 
 function App() {
   const [step, setStep] = useState<number>(0);
 
-  const boardRef = useRef<Board>();
-  boardRef.current =
-    boardRef.current ||
-    getStartingBoard(
-      BOARD_EDGE_SIZE,
-      BOARD_EDGE_SIZE,
-      NUMBER_OF_FISH,
-      NUMBER_OF_SHARKS
-    );
+  const engine = useRef<Engine>();
+  engine.current = engine.current || getNewEngine();
+
+  const computeNextState = useCallback(() => {
+    if (engine?.current) {
+      engine.current.nextState();
+      setStep((step: number) => step + 1);
+    }
+  }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const nextBoard = getNextBoard(boardRef.current || []);
-      boardRef.current = nextBoard;
-      setStep((step) => step + 1);
-    }, INTERVAL);
-
+    const intervalId = setInterval(computeNextState, INTERVAL);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [computeNextState]);
 
   const handleReset = useCallback(() => {
-    boardRef.current = getStartingBoard(
-      BOARD_EDGE_SIZE,
-      BOARD_EDGE_SIZE,
-      NUMBER_OF_FISH,
-      NUMBER_OF_SHARKS
-    );
+    engine.current = getNewEngine();
     setStep(1);
   }, []);
+
+  const simpleBoard = getSimpleBoard(engine.current.board);
 
   return (
     <div className="App">
       <div className="board">
-        {boardRef.current.map((row) => {
+        {simpleBoard.map((row, rowIndex) => {
           return (
-            <div className="row">
-              {row.map((cell: Cell) => CellSelector[cell._type])}
+            <div className="row" key={rowIndex}>
+              {row.map((cell: number) => CellSelector[cell])}
             </div>
           );
         })}
